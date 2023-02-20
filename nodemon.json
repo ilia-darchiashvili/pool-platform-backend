@@ -1,0 +1,8 @@
+{
+    "env": {
+        "DB_USER": "darchiashvilia",
+        "DB_PASSWORD": "wvnfxtyDpGZPX9lw",
+        "DB_NAME": "PoolPlatform",
+        "JWT_KEY": "supersecret_dont_share"
+    }
+}
