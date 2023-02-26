@@ -122,7 +122,7 @@ const createMatch = async (req, res, next) => {
       playerTwo.matchesWon++;
     }
 
-    if (player1Racks && player2Racks) {
+    if ((player1Racks && player2Racks) || player1Racks === 0 || player2Racks === 0) {
       playerOne.totalRacks += player1Racks + player2Racks;
       playerTwo.totalRacks += player1Racks + player2Racks;
       playerOne.racksWon += player1Racks;
