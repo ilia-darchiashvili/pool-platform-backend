@@ -25,4 +25,6 @@ router.post(
   playersControllers.createPlayer
 );
 
+router.delete('/:playerId', playersControllers.deletePlayer);
+
 module.exports = router;
