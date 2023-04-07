@@ -76,6 +76,15 @@ const createPlayer = async (req, res, next) => {
     isFemale
   } = req.body;
 
+  try {
+    const existingPlayer = await Player.find({$and: [{firstName: firstName}, {lastName: lastName}]});
+    if (existingPlayer?.length) {
+      throw new Error('Creating player failed - player with same first name and last name already exists!');
+    }
+  } catch (err) {
+    return next(err);
+  }
+
   const createdPlayer = new Player({
     firstName,
     lastName,
