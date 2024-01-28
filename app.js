@@ -51,11 +51,14 @@ app.use((error, req, res, next) => {
 
 mongoose
   .connect(
-    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@clusterpoolplatform.2odvcpv.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
-  )
-  .then(() => {
+    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@clusterpoolplatform.2odvcpv.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`,
+    {
+      useNewUrlParser: true,
+      useCreateIndex: true,
+      useUnifiedTopology: true
+    }
+  ).then(() => {
     app.listen(process.env.PORT || 5005);
-  })
-  .catch(err => {
+  }).catch(err => {
     console.log(err);
   });
