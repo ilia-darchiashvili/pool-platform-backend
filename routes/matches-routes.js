@@ -30,4 +30,6 @@ router.post(
   matchesControllers.createMatch
 );
 
+router.delete('/:matchId', matchesControllers.deleteMatch);
+
 module.exports = router;

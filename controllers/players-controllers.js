@@ -76,6 +76,15 @@ const createPlayer = async (req, res, next) => {
     isFemale
   } = req.body;
 
+  try {
+    const existingPlayer = await Player.find({$and: [{firstName: firstName}, {lastName: lastName}]});
+    if (existingPlayer?.length) {
+      throw new Error('Creating player failed - player with same first name and last name already exists!');
+    }
+  } catch (err) {
+    return next(err);
+  }
+
   const createdPlayer = new Player({
     firstName,
     lastName,
@@ -102,6 +111,42 @@ const createPlayer = async (req, res, next) => {
   res.status(201).json({ player: createdPlayer });
 };
 
+const deletePlayer = async (req, res, next) => {
+  const playerId = req.params.playerId;
+
+  let player;
+  try {
+    player = await Player.findById(playerId);
+  } catch (err) {
+    const error = new HttpError(
+      'Something went wrong, could not find a player.',
+      500
+    );
+    return next(error);
+  }
+
+  if (!player) {
+    const error = new HttpError(
+      'Could not find player for the provided id.',
+      404
+    );
+    return next(error);
+  }
+
+  try {
+    await player.remove();
+  } catch (err) {
+    const error = new HttpError(
+      'Something went wrong, could not delete player.',
+      500
+    );
+    return next(error);
+  }
+
+  res.status(200).json({ message: 'player deleted.' });
+}
+
 exports.getPlayerById = getPlayerById;
 exports.getPlayers = getPlayers;
 exports.createPlayer = createPlayer;
+exports.deletePlayer = deletePlayer;
