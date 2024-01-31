@@ -1,5 +1,5 @@
 const fs = require('fs');
-const path = require('path');
+// const path = require('path');
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 const playersRoutes = require('./routes/players-routes');
 const matchesRoutes = require('./routes/matches-routes');
 const usersRoutes = require('./routes/users-routes');
+const nextEventRoutes = require('./routes/next-event-routes');
 const HttpError = require('./models/http-error');
 
 const app = express();
@@ -29,6 +30,7 @@ app.use((req, res, next) => {
 
 app.use('/api/players', playersRoutes);
 app.use('/api/matches', matchesRoutes);
+app.use('/api/next_event', nextEventRoutes);
 app.use('/api/users', usersRoutes);
 
 app.use((req, res, next) => {
