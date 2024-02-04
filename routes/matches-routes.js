@@ -7,7 +7,10 @@ const checkAuth = require('../middleware/check-auth');
 const router = express.Router();
 
 router.get('/', matchesControllers.getAllMatches);
+// router.get('/:pageNumber/:pageSize', matchesControllers.getAllMatches);
 router.get('/players/:player1Id/:player2Id', matchesControllers.getMatches);
+
+router.get('/:matchId', matchesControllers.getMatchById);
 
 router.use(checkAuth);
 
@@ -31,5 +34,7 @@ router.post(
 );
 
 router.delete('/:matchId', matchesControllers.deleteMatch);
+
+router.patch('/:matchId', matchesControllers.updateMatch);
 
 module.exports = router;

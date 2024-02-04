@@ -27,4 +27,6 @@ router.post(
 
 router.delete('/:playerId', playersControllers.deletePlayer);
 
+router.patch('/:playerId', playersControllers.updatePlayer);
+
 module.exports = router;
