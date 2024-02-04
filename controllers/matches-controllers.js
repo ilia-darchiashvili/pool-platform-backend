@@ -6,6 +6,9 @@ const Match = require('../models/match');
 const Player = require('../models/player');
 
 const getAllMatches = async (req, res, next) => {
+  // const pageNumber = req.params.pageNumber;
+  // const pageSize = req.params.pageSize;
+
   let matches;
   try {
     matches = await Match.find({});
@@ -17,7 +20,9 @@ const getAllMatches = async (req, res, next) => {
     return next(error);
   }
 
-  res.json({ matches: matches.sort((a, b) => new Date(b.date) - new Date(a.date)).sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).map(match => match.toObject({ getters: true })) });
+  requestedMatchList = matches.sort((a, b) => new Date(b.date) - new Date(a.date)).sort((a, b) => new Date(b.created_at) - new Date(a.created_at));//.slice((pageNumber - 1) * pageSize, pageNumber * pageSize);
+
+  res.json({ matches: requestedMatchList.map(match => match.toObject({ getters: true })) });
 }
 
 const getMatches = async (req, res, next) => {
